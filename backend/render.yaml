@@ -1,0 +1,21 @@
+# Render Blueprint for the backend API (optional — manual setup also works)
+services:
+  - type: web
+    name: mini-erp-crm-backend
+    env: node
+    plan: free
+    buildCommand: npm install && npm run prisma:generate && npm run build
+    startCommand: npm run prisma:migrate:deploy && npm start
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 8h
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_URL
+        sync: false
+      - key: PORT
+        value: 4000
